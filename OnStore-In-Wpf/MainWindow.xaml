@@ -1,0 +1,90 @@
+﻿<Window x:Class="OnStore_In_Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OnStore_In_Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Background="DarkCyan">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0"
+              >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+                <Image Source="Images/cart.png"
+                       Width="50"
+                       Height="50"
+                       HorizontalAlignment="Left"></Image>
+            </Grid>
+            <Image Grid.Column="0" Grid.Row="0"
+                    Source="Images/OnlineStore.png"
+                       ></Image>
+            <Grid 
+                Grid.Row="0"
+                Grid.Column="1" 
+                Background="Transparent"
+                >
+                <TextBox Width="330"
+                         Height="22"
+                         BorderThickness="0"
+                         FontFamily="verdana"
+                         FontSize="16"
+                         Foreground="DarkGray"
+                         >
+                    Search
+                </TextBox>
+            </Grid>
+            <ListBox Grid.Row="1"
+                     Grid.Column="1"
+                     BorderThickness="0"
+                     Name="mainListbox"
+                     Background="DarkCyan"
+                     ItemsSource="{Binding Products}"
+                >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <WrapPanel>
+                                <Image Source="{Binding ImagePath}" 
+                                       Width="50"
+                                       Height="50"></Image>
+                                <Label Content="{Binding Name}"
+                                   FontSize="15"
+                                   FontFamily="verdana"
+                                   ></Label>
+                                <Label Content="{Binding Price}"
+                                   FontSize="15"
+                                   FontFamily="verdana"
+                                   ></Label>
+                                <Button Width="30"
+                                    Height="30"
+                                    Content="+"
+                                    FontSize="20"
+                                    HorizontalAlignment="Right"></Button>
+                            </WrapPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+</Window>
