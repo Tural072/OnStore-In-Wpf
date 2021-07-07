@@ -99,28 +99,28 @@
     <Resource Include="Images\cart.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\OnlineStore.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\search.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\bread1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\pizza.png" />
+    <Resource Include="Images\OnlineStore.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\burger.jpg" />
+    <Resource Include="Images\pizza.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\cola.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\juice.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Images\cips.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\juice.png" />
+    <Resource Include="Images\burger.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

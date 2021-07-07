@@ -5,12 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OnStore_In_Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Background="DarkCyan">
+        Title="MainWindow" Height="700" Width="1400"
+        MinHeight="700">
+    <Grid Background="#33658A">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+        <Grid Grid.Column="2">
+            <ListBox Name="editListbox"
+                     Background="#33658A"
+                     BorderThickness="0"></ListBox>
+        </Grid>
         <Grid Grid.Column="0"
               >
             <Grid.RowDefinitions>
@@ -25,10 +31,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                <Image Source="Images/cart.png"
-                       Width="50"
-                       Height="50"
-                       HorizontalAlignment="Left"></Image>
+                
             </Grid>
             <Image Grid.Column="0" Grid.Row="0"
                     Source="Images/OnlineStore.png"
@@ -43,8 +46,8 @@
                          BorderThickness="0"
                          FontFamily="verdana"
                          FontSize="16"
-                         Foreground="DarkGray"
-                         >
+                         Foreground="DarkGray" 
+                         Name="textBox">
                     Search
                 </TextBox>
             </Grid>
@@ -52,35 +55,71 @@
                      Grid.Column="1"
                      BorderThickness="0"
                      Name="mainListbox"
-                     Background="DarkCyan"
+                     Background="#33658A"
                      ItemsSource="{Binding Products}"
-                >
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                     >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel></WrapPanel>
+                        <WrapPanel ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalAlignment="Center"></WrapPanel>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
+
                         <Grid>
-                            <WrapPanel>
-                                <Image Source="{Binding ImagePath}" 
-                                       Width="50"
-                                       Height="50"></Image>
-                                <Label Content="{Binding Name}"
-                                   FontSize="15"
-                                   FontFamily="verdana"
-                                   ></Label>
-                                <Label Content="{Binding Price}"
-                                   FontSize="15"
-                                   FontFamily="verdana"
-                                   ></Label>
-                                <Button Width="30"
-                                    Height="30"
-                                    Content="+"
-                                    FontSize="20"
-                                    HorizontalAlignment="Right"></Button>
-                            </WrapPanel>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="10*"></RowDefinition>
+                                <RowDefinition Height="4*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" 
+                                    Name="border1" 
+                                    Width="200" 
+                                    Height="250" 
+                                    Background="Transparent" 
+                                    BorderBrush="#86BBD8" 
+                                    BorderThickness="5" 
+                                    Margin="5,25,5,5">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10*"></RowDefinition>
+                                        <RowDefinition Height="4*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0" >
+                                        <Image Width="150" Height="150" Margin="0,8,0,0"  Source="{Binding ImagePath}"></Image>
+                                        <Label Width="200" Height="5" Background="#86BBD8" Margin="0,4,0,0"></Label>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="1" >
+                                        <TextBlock Name="ProductNameText" Text="{Binding Path=Name}" FontSize="14" Foreground="#F6AE2D" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <TextBlock Name="ProductPriceText" Text="{Binding Path=Price}" FontSize="14" Foreground="#F6AE2D" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <TextBlock Name="ProductProducerText" Text="{Binding Path=Description}" FontSize="14" Foreground="#F6AE2D" FontWeight="Bold" Width="180" Height="20" Margin="5,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                    </StackPanel>
+                                    <WrapPanel
+                                        Grid.Row="1"
+                                        >
+                                        <Border Grid.Row="1"
+                                            BorderBrush="NavajoWhite"
+                                                CornerRadius="55"
+                                                BorderThickness="2"
+                                                Margin="130,20,0,0"
+                                                Panel.ZIndex="1">
+                                            <Button  
+                                                Content="+"
+                                                FontSize="30"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Width="40"
+                                                Height="40"
+                                                Margin="5,0,5,5"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Click="Button_Click">
+                                            </Button>
+                                        </Border>
+                                    </WrapPanel>
+                                </Grid>
+                            </Border>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
