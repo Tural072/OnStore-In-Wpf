@@ -15,7 +15,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="2">
-            <StackPanel>
+            <StackPanel AllowDrop="true" DragDrop.DragEnter="StackPanel_DragEnter" DragDrop.Drop="StackPanel_Drop">
                 <Border BorderThickness="2"
                         BorderBrush="Gray"
                         Width="400"
@@ -25,7 +25,7 @@
                     <Image Name="selectedProductImg"></Image>
                 </Border>
                 <Label Content=" Name" FontSize="30" Foreground="#F6AE2D"></Label>
-                    <TextBox Width="400"
+                <TextBox Width="400"
                              Height="40"
                              FontSize="30"
                              Name="name"></TextBox>
@@ -39,12 +39,20 @@
                              Height="40"
                              FontSize="30"
                          Name="description"></TextBox>
-                <Button Width="400"
+                <Border CornerRadius="30"
+                        Background="SkyBlue"
+                        BorderThickness="3"
+                        Margin="0,6"
+                        Width="400"
+                        Height="60">
+                    <Button Width="400"
                         Height="40"
-                        Margin="0,15"
                         Content="Update"
                         FontSize="25"
+                            Background="Transparent"
+                            BorderThickness="0"
                         Click="Button_Click"></Button>
+                </Border>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="0"
@@ -78,7 +86,7 @@
                          Name="searchTextBox"
                          Margin="0,0,90,0"
                          TextChanged="textBox_TextChanged">
-                   
+
                 </TextBox>
             </Grid>
             <ListBox Grid.Row="1"

@@ -106,7 +106,14 @@ namespace OnStore_In_Wpf
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            product.ImagePath = selectedProductImg.Source.ToString();
+            if (product == null)
+            {
+                return;
+            }
+            if (selectedProductImg.Source != null)
+            {
+                product.ImagePath = selectedProductImg.Source.ToString();
+            }
             product.Name = name.Text;
             product.Price = double.Parse(price.Text);
             product.Description = description.Text;
@@ -117,25 +124,58 @@ namespace OnStore_In_Wpf
         private void Border_MouseUp(object sender, MouseButtonEventArgs e)
         {
             var open = new OpenFileDialog();
-
             open.Multiselect = false;
             open.Filter = "Image file (*.png)|*.png";
-
             if (open.ShowDialog() != true)
+            {
                 return;
-
+            }
             var image = new BitmapImage(new Uri(open.FileName));
-
             var fileName = $@"Images/{Guid.NewGuid()}.png";
-
             if (!Directory.Exists("Images"))
+            {
                 Directory.CreateDirectory("Images");
-
+            }
             image.Save(fileName);
-
             var fullFileName = Directory.GetCurrentDirectory() + "\\" + fileName;
-
             selectedProductImg.Source = new BitmapImage(new Uri(fullFileName));
+        }
+
+        private void StackPanel_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
+            {
+                e.Effects = DragDropEffects.All;
+            }
+        }
+
+        private void StackPanel_Drop(object sender, DragEventArgs e)
+        {
+            string word = "";
+            if (!Directory.Exists("Add ProductImage"))
+            {
+                Directory.CreateDirectory("Add ProductImage");
+            }
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var file in files)
+            {
+                word = file;
+            }
+            try
+            {
+                string dircopyfrom = word;
+                string[] fileEnter = Directory.GetFiles(dircopyfrom);
+                string dircopyto = $@"Add ProductImage";
+                foreach (var f in fileEnter)
+                {
+                    string filename = System.IO.Path.GetFileName(f);
+                    File.Copy(f, dircopyto + "\\" + filename, true);
+                    File.Delete(f);
+                }
+            }
+            catch (Exception) { }
+            File.Copy(word, $@"Add ProductImage/image.png", true);
+            selectedProductImg.Source = new BitmapImage(new Uri(word));
         }
     }
 }
