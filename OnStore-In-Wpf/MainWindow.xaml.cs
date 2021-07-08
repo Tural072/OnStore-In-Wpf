@@ -1,6 +1,9 @@
-﻿using OnStore_In_Wpf.Models;
+﻿using Microsoft.Win32;
+using OnStore_In_Wpf.Extensions;
+using OnStore_In_Wpf.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,31 +25,33 @@ namespace OnStore_In_Wpf
     /// 
     public partial class MainWindow : Window
     {
-        public List<Product> products;
-        public List<Product> Products { get;set; }
+        Product product;
+        public List<Product> Products { get; set; }
+        public List<Product> ProductsCopy { get; set; }
 
         public MainWindow()
         {
-            products = new List<Product>() {
+            Products = new List<Product>() {
                 new Product
                 {
                     Name = "Bread",
                     Price = 0.50,
                     ImagePath = "Images/bread1.png",
-                    Description = "sdzrahszrgh"
+                    Description = "Bine zavod coreyi"
                 },
             new Product
             {
                 Name = "Pizza",
                 Price = 14,
                 ImagePath = "Images/pizza.png",
+                Description = "Pizza salami"
             },
             new Product
             {
                 Name = "Burger",
                 Price = 4,
                 ImagePath = "Images/burger.png",
-                Description = ""
+                Description = "Beef burger"
             },
             new Product
             {
@@ -59,23 +64,78 @@ namespace OnStore_In_Wpf
                 Name = "Cips",
                 Price = 2,
                 ImagePath = "Images/cips.png",
-                Description = ""
+                Description = "0,5 L"
             },
             new Product
             {
                 Name = "Juice",
                 Price = 2.50,
                 ImagePath = "Images/juice.png",
+                Description = "Portagal shiresi"
             }
             };
             DataContext = this;
-            Products = products;
+            ProductsCopy = Products;
             InitializeComponent();
+        }
+
+        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (mainListbox.SelectedItem is Product item)
+            {
+                selectedProductImg.Source = new BitmapImage(new Uri(item.ImagePath, UriKind.RelativeOrAbsolute));
+                product = item;
+                name.Text = item.Name;
+                price.Text = item.Price.ToString();
+                description.Text = item.Description;
+
+            }
+        }
+
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            mainListbox.ItemsSource = null;
+            ProductsCopy = ProductsCopy.Where(p => p.Name.Contains(searchTextBox.Text)).ToList();
+            mainListbox.ItemsSource = ProductsCopy;
+            ProductsCopy = Products;
+            if (string.IsNullOrWhiteSpace(searchTextBox.Text))
+            {
+                mainListbox.ItemsSource = Products;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            mainListbox.SelectedItem = editListbox.Items;
+            product.ImagePath = selectedProductImg.Source.ToString();
+            product.Name = name.Text;
+            product.Price = double.Parse(price.Text);
+            product.Description = description.Text;
+            mainListbox.ItemsSource = null;
+            mainListbox.ItemsSource = Products;
+        }
+
+        private void Border_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var open = new OpenFileDialog();
+
+            open.Multiselect = false;
+            open.Filter = "Image file (*.png)|*.png";
+
+            if (open.ShowDialog() != true)
+                return;
+
+            var image = new BitmapImage(new Uri(open.FileName));
+
+            var fileName = $@"Images/{Guid.NewGuid()}.png";
+
+            if (!Directory.Exists("Images"))
+                Directory.CreateDirectory("Images");
+
+            image.Save(fileName);
+
+            var fullFileName = Directory.GetCurrentDirectory() + "\\" + fileName;
+
+            selectedProductImg.Source = new BitmapImage(new Uri(fullFileName));
         }
     }
 }
